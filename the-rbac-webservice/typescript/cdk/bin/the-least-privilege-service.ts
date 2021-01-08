@@ -5,6 +5,7 @@ import * as cdk from '@aws-cdk/core';
 import { CognitoIdentityPoolStack } from '../lib/cognito-identity-pool-stack';
 import { LeastPrivilegeWebserviceStack } from '../lib/least-privilege-webservice-stack';
 import { CognitoRbacRoleMappingStack } from '../lib/cognito-rbac-rolemappings-stack';
+import { LeastPrivilegeGraphQLServiceStack} from '../lib/least-privilege-graphql-stack';
 
 import { StackConfiguration } from '../lib/configuration/stack-configuration';
 
@@ -35,6 +36,15 @@ const identityPoolStack = new CognitoIdentityPoolStack(app, 'swa-lp-identity-poo
 // ================================================================================
 const webServiceStack = new LeastPrivilegeWebserviceStack(app, 'swa-lp-webservice-stack', {
   identityPoolRef: identityPoolStack.identityPool.ref
+})
+
+// ================================================================================
+// Create a WebService implemented using AppSync
+// 
+// ================================================================================
+const appSyncStack = new LeastPrivilegeGraphQLServiceStack(app, 'swa-lp-graphql-stack', {
+  userRole: webServiceStack.userRole,
+  adminRole: webServiceStack.adminRole
 })
 
 // ================================================================================

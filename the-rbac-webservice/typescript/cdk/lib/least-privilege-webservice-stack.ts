@@ -11,6 +11,7 @@ import {
 
 interface webServiceStackProps extends cdk.StackProps {
     identityPoolRef: string;
+    
 }
 
 export class LeastPrivilegeWebserviceStack extends cdk.Stack {
